@@ -2,6 +2,7 @@ import axios from 'axios';
 import { isHaveStorage, getLocalStorage, removeLocalStorage } from '@/util/storage';
 import { Notification } from 'element-ui';
 import router from '../router';
+import stroe from '../store';
 
 const Axios = axios.create({
   baseURL: 'http://127.0.0.1:3000',
@@ -39,6 +40,7 @@ Axios.interceptors.response.use(
           type: 'error',
         });
         // 跳转到登录页
+        stroe.dispatch('LOG_OUT');
         removeLocalStorage('token');
         router.push('/login');
         break;
