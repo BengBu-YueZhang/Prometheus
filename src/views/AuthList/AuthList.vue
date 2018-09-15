@@ -6,8 +6,8 @@
         type="primary"
         plain>添加权限</el-button>
     </div>
-    <el-tabs :value="active" @tab-click="handleClick">
-      <el-tab-pane label="全部" name=""></el-tab-pane>
+    <el-tabs v-model="active" @tab-click="handleClick">
+      <el-tab-pane label="全部" name="all"></el-tab-pane>
       <el-tab-pane
         v-for="(group, index) in groups"
         :key="index"
@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
 import TableMixins from '@/mixins/TableMixins';
 import { AuthsInterface } from '@/interfaces';
@@ -103,7 +103,12 @@ export default class Home extends mixins(TableMixins) {
 
   public groups: string[] = [];
 
-  public active: string = '';
+  public active: string = 'all';
+
+  @Watch('filter')
+  public onFilterChange(): void {
+    this.init();
+  }
 
   public created(): void {
     this.init();
@@ -155,9 +160,11 @@ export default class Home extends mixins(TableMixins) {
 
   public async remove(id: string): Promise<any> {
     if (id) {
-      await AuthListRequest.addAuth({ id });
+      await AuthListRequest.removeAuth({ id });
       this.$notify({ title: 'success', type: 'success', message: '删除权限成功, 请刷新浏览器' });
-      this.init();
+      this.active = 'all';
+      this.filter = { ...this.filter, group: 'all' };
+      await this.init(); 
     }
   } 
 }
