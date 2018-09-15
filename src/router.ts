@@ -3,7 +3,8 @@ import Router from 'vue-router';
 import Login from '@/views/Login.vue';
 import Home from '@/views/Home/Home.vue';
 import UserList from '@/views/UserList/UserList.vue';
-import RoleList from '@/views/RoleList/RoleList.vue'
+import RoleList from '@/views/RoleList/RoleList.vue';
+import AuthList from '@/views/AuthList/AuthList.vue';
 import Stroe from './store';
 
 Vue.use(Router);
@@ -46,6 +47,15 @@ const router = new Router({
           path: 'role/list',
           component: RoleList,
           name: 'RoleList',
+          meta: {
+            requiresAuth: true,
+            Breadcrumbs: '角色列表',
+          },
+        },
+        {
+          path: 'auth/list',
+          component: AuthList,
+          name: 'AuthList',
           meta: {
             requiresAuth: true,
             Breadcrumbs: '角色列表',

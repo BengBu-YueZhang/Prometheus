@@ -40,7 +40,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="user = scope.row; $refs.addUser.visible = true;"
+            @click="edit(scope.row)"
             type="success"
             plain
           >编辑</el-button>
@@ -126,6 +126,12 @@ export default class UserList extends mixins(TableMixins) {
       this.$notify({ title: 'success', type: 'success', message: '删除用户成功' });
       this.get();
     }
+  }
+
+  public edit (row: UserInterface): void {
+    this.user = row;
+    this.user.roles = this.user.roles.map(r => r.id);
+    this.$refs.addUser.visible = true;
   }
 }
 </script>

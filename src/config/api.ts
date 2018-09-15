@@ -4,4 +4,6 @@ export default {
   roleList: '/role/list',
   addUser: '/user',
   logut: '/user/logout',
+  authList: '/auth/list',
+  addRole: '/role',
 };

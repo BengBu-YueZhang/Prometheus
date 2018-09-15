@@ -30,8 +30,9 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import LoginRequest from '@/request/login';
 import RoleListRequest from '@/request/roleList';
+import AuthListRequest from '@/request/authList';
 import { setLocalStorage, isHaveStorage, getLocalStorage } from '@/util/storage';
-import { RoleInterface } from '@/interfaces';
+import { RoleInterface, AuthsInterface } from '@/interfaces';
 import { Action, State } from 'vuex-class';
 
 interface FormInterface {
@@ -48,6 +49,7 @@ interface RulesInterface {
 export default class Login extends Vue {
   @Action('setToken') public setToken!: (token: string | null) => void;
   @Action('setRoles') public setRoles!: (roles: RoleInterface[]) => void;
+  @Action('setAuths') public setAuths!: (auths: AuthsInterface[]) => void;
 
   public form: FormInterface = {
     name: '',
@@ -89,7 +91,8 @@ export default class Login extends Vue {
     this.loadingText = '登录中……';
     this.loading = true;
     let token: string;
-    let list: RoleInterface[];
+    let roles: RoleInterface[];
+    let auths: AuthsInterface[];
     // TODO: 准备数据中, 自动登录不再次获取token
     if (!isHaveStorage('token')) {
       ({ data: { token } } = await LoginRequest.login(this.form));
@@ -97,9 +100,13 @@ export default class Login extends Vue {
     }
     token = getLocalStorage('token');
     this.loadingText = '登录成功, 准备数据中…';
-    ({ data: { list } } = await RoleListRequest.getRoleList({ pagestart: 1, pagesize: 10000 }));
-    this.setRoles(list);
+    const role = await RoleListRequest.getRoleList({ pagestart: 1, pagesize: 10000 });
+    const auth = await AuthListRequest.getAuthList({ pagestart: 1, pagesize: 10000 })
+    roles = role.data.list
+    auths = auth.data.list
+    this.setRoles(roles);
     this.setToken(token);
+    this.setAuths(auths);
     this.loading = false;
     this.$router.push('/home');
   }

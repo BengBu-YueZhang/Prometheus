@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Commit } from 'vuex';
-import { RoleInterface } from './interfaces';
+import { RoleInterface, AuthsInterface } from './interfaces';
 import { clearLocalStorage } from './util/storage';
 
 Vue.use(Vuex);
@@ -9,11 +9,13 @@ Vue.use(Vuex);
 interface StateInterface {
   roles: RoleInterface[];
   token: string;
+  auths: AuthsInterface[];
 }
 
 const state: StateInterface = {
   roles: [],
   token: '',
+  auths: [],
 };
 
 const getters = {
@@ -26,6 +28,10 @@ const actions = {
 
   setToken({ commit }: { commit: Commit }, token: string): void {
     commit('SET_TOKEN', token);
+  },
+
+  setAuths({ commit }: { commit: Commit }, auths: AuthsInterface[]): void {
+    commit('SET_AUTHS', auths);
   },
 
   logout({ commit }: { commit: Commit }): void {
@@ -42,9 +48,14 @@ const mutations = {
     vstate.token = token;
   },
 
+  SET_AUTHS(vstate: StateInterface, auths: AuthsInterface[]): void {
+    vstate.auths = auths;
+  },
+
   LOG_OUT(vstate: StateInterface): void {
     clearLocalStorage();
     vstate.roles = [];
+    vstate.auths = [];
     vstate.token = '';
   },
 };
