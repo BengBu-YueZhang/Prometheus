@@ -40,7 +40,7 @@ Axios.interceptors.response.use(
           type: 'error',
         });
         // 跳转到登录页
-        stroe.dispatch('LOG_OUT');
+        stroe.dispatch('logout');
         removeLocalStorage('token');
         router.push('/login');
         break;

@@ -3,4 +3,5 @@ export default {
   userList: '/user/list',
   roleList: '/role/list',
   addUser: '/user',
+  logut: '/user/logout',
 };
