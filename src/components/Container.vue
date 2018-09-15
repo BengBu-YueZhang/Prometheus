@@ -3,6 +3,7 @@
     <el-aside width="220px" style="background-color: rgb(238, 241, 246)">
       <div class="flex-center-center">
         <el-button
+          icon="el-icon-setting"
           @click="logout"
           type="text">注销</el-button>
       </div>
@@ -24,7 +25,7 @@ import LoginRequest from '../request/login'
 @Component
 export default class Container extends Vue {
   public async logout(): Promise<any> {
-    await LoginRequest.logout()
+    await LoginRequest.logout();
     stroe.dispatch('logout');
   }
 }

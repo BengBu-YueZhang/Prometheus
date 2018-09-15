@@ -5,6 +5,9 @@
         @click="$refs.addUser.visible = true;"
         type="primary"
         plain>添加用户</el-button>
+      <el-button @click="$router.push('/home/role/list')">
+        >
+      </el-button>
     </div>
     <el-table :data="list" v-loading="tableLoading">
       <el-table-column
@@ -96,12 +99,12 @@ export default class UserList extends mixins(TableMixins) {
   };
 
   public async get(): Promise<any> {
-    let list: any[];
-    let count: number;
+    let list: UserInterface[];
+    let total: number;
     this.tableLoading = true;
-    ({ data: { data: { list, count } } } = await UserListRequest.getUserList(this.filter));
+    ({ data: { list, total }} = await UserListRequest.getUserList(this.filter));
     this.list = list;
-    this.total = count;
+    this.total = total;
     this.tableLoading = false;
   }
 

@@ -6,10 +6,6 @@ interface LoginParamsInterface {
   password: string;
 }
 
-interface LogoutParamsInterface {
-  id: string;
-}
-
 export default {
   async login(params: LoginParamsInterface): Promise<any> {
     try {
@@ -19,9 +15,9 @@ export default {
     }
   },
 
-  async logout(params: LogoutParamsInterface): Promise<any> {
+  async logout(): Promise<any> {
     try {
-      return await Axios.post(API.logut, params)
+      return await Axios.post(API.logut)
     } catch (error) {
       throw error;
     }
