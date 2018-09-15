@@ -6,4 +6,6 @@ export default {
   logut: '/user/logout',
   authList: '/auth/list',
   addRole: '/role',
+  addAuth: '/auth',
+  groupList: '/auth/group'
 };

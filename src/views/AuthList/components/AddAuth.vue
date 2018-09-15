@@ -2,14 +2,17 @@
   <el-dialog
     @close="afterClose"
     @open="beforeOpen"
-    title="添加角色"
+    title="添加权限"
     :visible.sync="visible">
     <el-form ref="form" :model="dialogData" label-width="80px">
       <el-form-item label="code">
-        <el-input v-model="dialogData.code"></el-input>
+        <el-input v-model="dialogData.code" :disabled="isEdit"></el-input>
       </el-form-item>
       <el-form-item label="名称">
         <el-input v-model="dialogData.name"></el-input>
+      </el-form-item>
+      <el-form-item label="权限组">
+        <el-input v-model="dialogData.group"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -24,33 +27,36 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import DialogMixins from '@/mixins/DialogMixins';
 import { mixins } from 'vue-class-component';
-import { RoleInterface } from '@/interfaces';
+import { AuthsInterface } from '@/interfaces';
 
 @Component
-export default class AddRole extends mixins(DialogMixins) {
+export default class AddAuth extends mixins(DialogMixins) {
   @Prop({
     default: {
       id: '',
       code: '',
-      name: '',
-      auths: [],
+      group: '',
     },
     required: true,
-  }) public edit!: RoleInterface;
+  }) public edit!: AuthsInterface;
 
-  public dialogData: RoleInterface = {
+  public dialogData: AuthsInterface = {
     id: '',
     code: '',
     name: '',
-    auths: [],
+    group: '',
   };
+
+  get isEdit(): boolean {
+    return !!this.dialogData.id
+  }
 
   public empty(): void {
     this.dialogData = {
       id: '',
       code: '',
       name: '',
-      auths: [],
+      group: '',
     };
   }
 }

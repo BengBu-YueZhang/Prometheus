@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 
 interface FilterInterface {
   pagesize: number;
@@ -18,6 +18,11 @@ export default class TableMixins extends Vue {
   public total: number = 0;
 
   public list: any[] = [];
+
+  @Watch('filter')
+  public onFilterChange(): void {
+    this.get();
+  }
 
   public created(): void {
     this.get();
