@@ -49,7 +49,7 @@ export default class AddUser extends mixins(DialogMixins) {
     required: true,
   }) public edit!: UserInterface;
 
-  @State('roles') public roles!: RoleInterface;
+  @State('roles') public roles!: RoleInterface[];
 
   public dialogData: UserInterface = {
     id: '',

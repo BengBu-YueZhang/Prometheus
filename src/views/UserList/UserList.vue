@@ -5,9 +5,6 @@
         @click="$refs.addUser.visible = true;"
         type="primary"
         plain>添加用户</el-button>
-      <el-button @click="$router.push('/home/role/list')">
-        >
-      </el-button>
     </div>
     <el-table :data="list" v-loading="tableLoading">
       <el-table-column

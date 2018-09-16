@@ -122,6 +122,7 @@ export default class Login extends Vue {
   height: 100vh;
   overflow: hidden;
   background-size: 100% 100%;
+  background-image: url('https://unsplash.it/1280/720?random');
   .login-wrapper {
     width: 300px;
     height: 100vh;

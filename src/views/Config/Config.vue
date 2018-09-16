@@ -61,7 +61,7 @@ import { RoleInterface } from '@/interfaces';
 @Component
 export default class Config extends Vue {
 
-  @State('roles') public roles!: RoleInterface;
+  @State('roles') public roles!: RoleInterface[];
 
   public role: string = '';
 
