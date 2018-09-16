@@ -5,6 +5,7 @@ import Home from '@/views/Home/Home.vue';
 import UserList from '@/views/UserList/UserList.vue';
 import RoleList from '@/views/RoleList/RoleList.vue';
 import AuthList from '@/views/AuthList/AuthList.vue';
+import Config from '@/views/Config/Config.vue';
 import Stroe from './store';
 
 Vue.use(Router);
@@ -28,7 +29,7 @@ const router = new Router({
       path: '/home',
       component: Home,
       name: 'Home',
-      redirect: '/home/auth/list',
+      redirect: '/home/config',
       meta: {
         requiresAuth: true,
         Breadcrumbs: '首页',
@@ -61,6 +62,15 @@ const router = new Router({
             Breadcrumbs: '角色列表',
           },
         },
+        {
+          path: 'config',
+          component: Config,
+          name: 'Config',
+          meta: {
+            requiresAuth: true,
+            Breadcrumbs: '权限控制'
+          }
+        }
       ],
     },
   ],

@@ -155,6 +155,8 @@ export default class Home extends mixins(TableMixins) {
   public edit(row: AuthsInterface): void {
     this.auth = row;
     this.$refs.addAuth.visible = true;
+    this.active = 'all';
+    this.filter = { ...this.filter, group: 'all' };
     this.init();
   }
 

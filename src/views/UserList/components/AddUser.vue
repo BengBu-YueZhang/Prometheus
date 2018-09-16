@@ -37,7 +37,6 @@ import { mixins } from 'vue-class-component';
 import { UserInterface, RoleInterface } from '@/interfaces';
 import { State } from 'vuex-class';
 
-
 @Component
 export default class AddUser extends mixins(DialogMixins) {
   @Prop({
