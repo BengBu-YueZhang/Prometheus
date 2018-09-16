@@ -29,7 +29,7 @@ const router = new Router({
       path: '/home',
       component: Home,
       name: 'Home',
-      redirect: '/home/config',
+      redirect: '/home/user/list',
       meta: {
         requiresAuth: true,
         Breadcrumbs: '首页',

@@ -70,8 +70,10 @@ export default class Config extends Vue {
   public auths: any[] = [];
 
   public created(): void {
-    this.role = this.roles[0].id;
-    this.handleSelectChange(this.role);
+    if (this.roles && this.roles.length) {
+      this.role = this.roles[0].id;
+      this.handleSelectChange(this.role);
+    }
     this.get();
   }  
 
