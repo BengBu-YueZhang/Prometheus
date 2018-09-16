@@ -13,8 +13,8 @@ export interface AuthsInterface {
  */
 export interface RoleInterface {
   id?: string;
-  code: string;
-  name: string;
+  code?: string;
+  name?: string;
   auths?: AuthsInterface[];
 }
 

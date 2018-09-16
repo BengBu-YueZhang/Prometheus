@@ -14,7 +14,7 @@
     </el-select>
   </div>
   <div>
-    <el-checkbox-group v-model="auths">
+    <el-checkbox-group v-model="auths" @change="handleCheckboxChange">
       <div class="flex-start-start-wrap">
         <el-card
           class="box-card w350 m-r-10 m-b-5"
@@ -37,7 +37,7 @@
               v-for="(code, index) in group.allows"
               :key="index">
               <el-checkbox
-                :label="code">
+                :label="code.id">
                 {{code.name}}
               </el-checkbox>
             </div>
@@ -53,6 +53,7 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import AuthListRequest from '@/request/authList';
+import ConfigRequest from '@/request/config';
 import { AuthsInterface } from '@/interfaces';
 import { State } from 'vuex-class';
 import { RoleInterface } from '@/interfaces';
@@ -62,16 +63,21 @@ export default class Config extends Vue {
 
   @State('roles') public roles!: RoleInterface;
 
-  public role: string = [];
+  public role: string = '';
 
   public groups: any[] = [];
 
   public auths: any[] = [];
 
   public created(): void {
+    this.role = this.roles[0].id;
+    this.handleSelectChange(this.role);
     this.get();
   }  
 
+  /**
+   * 获取权限列表
+   */
   public async get(): Promise<any> {
     let list: AuthsInterface[];
     let total: number;
@@ -92,7 +98,14 @@ export default class Config extends Vue {
     }
   }
 
-  public handleSelectChange(value): void {
+  public async handleSelectChange(id): Promise<any> {
+    const { data: { auths } } = await ConfigRequest.getRole({ id });
+    this.auths = auths.map(a => a.id);
+  }
+
+  public async handleCheckboxChange(): Promise<any> {
+    await ConfigRequest.updateRole({ id: this.role, auths: this.auths });
+    this.$notify({ title: 'success', type: 'success', message: '更新角色权限, 请刷新浏览器' });
   }
 }
 </script>
