@@ -1,21 +1,14 @@
-# prometheus
+## 项目介绍
 
-## Project setup
-```
-npm install
-```
+新世纪福音战士为主题的论坛的后台管理项目。使用Vue + TypeScript进行开发
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 目前以完成的
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- [x] 用户列表页, 动作列表页, 权限列表页, 角色权限配置页
+- [x] 路由级别的基于角色权限控制
+- [x] 侧边栏菜单的权限控制
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 未来的计划
+
+- [ ] 使用React重构整个项目
+- [ ] 使用angular重构整个项目

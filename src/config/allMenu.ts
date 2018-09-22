@@ -13,13 +13,13 @@ export default [
   },
   {
     path: '/home/role/list',
-    auth: 'authlist_menu',
+    auth: 'rolelist_menu',
     name: '角色列表',
     icon: 'el-icon-tickets'
   },
   {
     path: '/home/config',
-    auth: 'authlist_menu',
+    auth: 'authconfig_menu',
     name: '权限配置',
     icon: 'el-icon-star-off'
   }

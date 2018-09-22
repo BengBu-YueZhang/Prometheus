@@ -32,7 +32,7 @@ const router = new Router({
       name: 'Home',
       redirect: '/home/user',
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
         Breadcrumbs: '首页',
       },
       children: [
@@ -42,7 +42,7 @@ const router = new Router({
           name: 'User',
           meta: {
             requiresAuth: true,
-            Breadcrumbs: '用户首页'
+            Breadcrumbs: '用户首页',
           }
         },
         {
@@ -52,6 +52,7 @@ const router = new Router({
           meta: {
             requiresAuth: true,
             Breadcrumbs: '用户列表',
+            pn: 'userlist_menu',
           },
         },
         {
@@ -61,6 +62,7 @@ const router = new Router({
           meta: {
             requiresAuth: true,
             Breadcrumbs: '角色列表',
+            pn: 'rolelist_menu',
           },
         },
         {
@@ -69,7 +71,8 @@ const router = new Router({
           name: 'AuthList',
           meta: {
             requiresAuth: true,
-            Breadcrumbs: '角色列表',
+            Breadcrumbs: '动作列表',
+            pn: 'authlist_menu',
           },
         },
         {
@@ -78,7 +81,8 @@ const router = new Router({
           name: 'Config',
           meta: {
             requiresAuth: true,
-            Breadcrumbs: '权限控制'
+            Breadcrumbs: '权限控制',
+            pn: 'authconfig_menu'
           }
         }
       ],
@@ -87,12 +91,16 @@ const router = new Router({
 });
 
 router.beforeEach((to: any, from: any, next: any): void => {
-  // TODO: 需要做路由鉴权
-  const { path } = to;
+  const { path, meta: { requiresAuth } } = to;
+  // 首先进行登录的鉴权
+  console.log(to)
   if (!Stroe.state.token && path !== '/login') {
     router.push('/login');
   } else {
-    next();
+    if (requiresAuth) {
+    } else {
+      next();
+    }
   }
 });
 
