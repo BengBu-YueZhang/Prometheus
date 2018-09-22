@@ -1,10 +1,9 @@
 import API from '@/config/api';
 import Axios from '@/util/axios';
-import { RoleInterface } from '../interfaces';
-
-interface getRoleInterface {
-  id: string;
-}
+import {
+  RoleInterface,
+  IdInterface
+} from '../interfaces';
 
 export default {
   async updateRole (params: RoleInterface): Promise<any> {
@@ -15,7 +14,7 @@ export default {
     }
   },
 
-  async getRole(params: getRoleInterface): Promise<any> {
+  async getRole(params: IdInterface): Promise<any> {
     try {
       return Axios.get(API.addRole, { params })
     } catch (error) {

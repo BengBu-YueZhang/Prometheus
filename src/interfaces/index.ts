@@ -1,8 +1,24 @@
 /**
+ * 列表请求的接口
+ * 一些定制化的请求参数，通过接口的继承实现
+ */
+export interface tableListInterface {
+  pagesize: number;
+  pagestart: number;
+}
+
+export interface IdInterface {
+  id?: string;
+}
+
+export interface AuthTableInterface extends tableListInterface {
+  group?: string
+}
+
+/**
  * 权限接口
  */
-export interface AuthsInterface {
-  id?: string;
+export interface AuthsInterface extends IdInterface {
   code: string;
   name: string;
   group: string;
@@ -11,8 +27,7 @@ export interface AuthsInterface {
 /**
  * 角色接口
  */
-export interface RoleInterface {
-  id?: string;
+export interface RoleInterface extends IdInterface {
   code?: string;
   name?: string;
   auths?: AuthsInterface[];
@@ -21,9 +36,13 @@ export interface RoleInterface {
 /**
  * 用户接口
  */
-export interface UserInterface {
-  id?: string;
+export interface UserInterface extends IdInterface {
   name: string;
   password: string;
   roles: any[];
+}
+
+export interface LoginInterface {
+  name: string;
+  password: string;
 }

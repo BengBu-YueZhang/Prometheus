@@ -1,18 +1,13 @@
 import API from '@/config/api';
 import Axios from '@/util/axios';
-import { AuthsInterface } from '../interfaces';
-
-interface GetAuthListParamsInterface {
-  pagesize: number;
-  pagestart: number;
-}
-
-interface RemoveAuthInterface {
-  id: string;
-}
+import {
+  AuthsInterface,
+  AuthTableInterface,
+  IdInterface,
+} from '../interfaces';
 
 export default {
-  async getAuthList(params: GetAuthListParamsInterface): Promise<any> {
+  async getAuthList(params: AuthTableInterface): Promise<any> {
     try {
       return Axios.get(API.authList, { params });
     } catch (error) {
@@ -44,7 +39,7 @@ export default {
     }
   },
 
-  async removeAuth(params: RemoveAuthInterface): Promise<any> {
+  async removeAuth(params: IdInterface): Promise<any> {
     try {
       return Axios.delete(API.addAuth, { params })
     } catch (error) {

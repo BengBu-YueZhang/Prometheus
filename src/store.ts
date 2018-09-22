@@ -6,6 +6,7 @@ import { clearLocalStorage } from './util/storage';
 
 Vue.use(Vuex);
 
+// state的接口
 interface StateInterface {
   roles: RoleInterface[];
   token: string;

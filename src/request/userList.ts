@@ -1,18 +1,13 @@
 import API from '@/config/api';
 import Axios from '@/util/axios';
-import { UserInterface } from '@/interfaces';
-
-interface GetUserListParamsInterface {
-  pagesize: number;
-  pagestart: number;
-}
-
-interface RemoveUserInterface {
-  id: string;
-}
+import {
+  UserInterface,
+  tableListInterface,
+  IdInterface
+} from '@/interfaces';
 
 export default {
-  async getUserList(params: GetUserListParamsInterface): Promise<any> {
+  async getUserList(params: tableListInterface): Promise<any> {
     try {
       return Axios.get(API.userList, { params });
     } catch (error) {
@@ -36,7 +31,7 @@ export default {
     }
   },
 
-  async removeUser(params: RemoveUserInterface): Promise<any> {
+  async removeUser(params: IdInterface): Promise<any> {
     try {
       return Axios.delete(API.addUser, { params });
     } catch (error) {

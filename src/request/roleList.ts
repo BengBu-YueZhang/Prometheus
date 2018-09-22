@@ -1,18 +1,13 @@
 import API from '@/config/api';
 import Axios from '@/util/axios';
-import { RoleInterface } from '@/interfaces';
-
-interface GetRoleListParamsInterface {
-  pagesize: number;
-  pagestart: number;
-}
-
-interface RemoveRoleInterface {
-  id: string;
-}
+import {
+  RoleInterface,
+  IdInterface,
+  tableListInterface
+} from '@/interfaces';
 
 export default {
-  async getRoleList(params: GetRoleListParamsInterface): Promise<any> {
+  async getRoleList(params: tableListInterface): Promise<any> {
     try {
       return Axios.get(API.roleList, { params });
     } catch (error) {
@@ -28,7 +23,7 @@ export default {
     }
   },
 
-  async removeRole(params: RemoveRoleInterface): Promise<any> {
+  async removeRole(params: IdInterface): Promise<any> {
     try {
       return Axios.delete(API.addRole, { params });
     } catch (error) {

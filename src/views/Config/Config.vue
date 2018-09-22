@@ -55,9 +55,8 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import AuthListRequest from '@/request/authList';
 import ConfigRequest from '@/request/config';
-import { AuthsInterface } from '@/interfaces';
+import { AuthsInterface, RoleInterface } from '@/interfaces';
 import { State } from 'vuex-class';
-import { RoleInterface } from '@/interfaces';
 
 @Component
 export default class Config extends Vue {

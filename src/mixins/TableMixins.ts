@@ -1,14 +1,10 @@
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
-
-interface FilterInterface {
-  pagesize: number;
-  pagestart: number;
-}
+import { tableListInterface } from '@/interfaces';
 
 @Component
 export default class TableMixins extends Vue {
-  public filter: FilterInterface = {
+  public filter: tableListInterface = {
     pagestart: 1,
     pagesize: 10,
   };

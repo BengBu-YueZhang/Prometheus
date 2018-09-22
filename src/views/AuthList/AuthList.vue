@@ -70,16 +70,10 @@ import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
 import TableMixins from '@/mixins/TableMixins';
-import { AuthsInterface } from '@/interfaces';
+import { AuthsInterface, AuthTableInterface } from '@/interfaces';
 import Pagination from '@/components/Pagination.vue';
 import AddAuth from './components/AddAuth';
 import AuthListRequest from '@/request/authList';
-
-interface FilterInterface {
-  pagesize: number;
-  pagestart: number;
-  group?: string;
-}
 
 @Component({
   components: {
@@ -96,7 +90,7 @@ export default class Home extends mixins(TableMixins) {
     group: '',
   }
 
-  public filter: FilterInterface = {
+  public filter: AuthTableInterface = {
     pagesize: 10,
     pagestart: 1,
     group: ''

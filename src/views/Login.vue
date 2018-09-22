@@ -33,13 +33,8 @@ import LoginRequest from '@/request/login';
 import RoleListRequest from '@/request/roleList';
 import AuthListRequest from '@/request/authList';
 import { setLocalStorage, isHaveStorage, getLocalStorage } from '@/util/storage';
-import { RoleInterface, AuthsInterface } from '@/interfaces';
+import { RoleInterface, AuthsInterface, LoginInterface } from '@/interfaces';
 import { Action, State } from 'vuex-class';
-
-interface FormInterface {
-  name: string;
-  password: string;
-}
 
 interface RulesInterface {
   name: any[];
@@ -52,7 +47,7 @@ export default class Login extends Vue {
   @Action('setRoles') public setRoles!: (roles: RoleInterface[]) => void;
   @Action('setAuths') public setAuths!: (auths: AuthsInterface[]) => void;
 
-  public form: FormInterface = {
+  public form: LoginInterface = {
     name: '',
     password: '',
   };
