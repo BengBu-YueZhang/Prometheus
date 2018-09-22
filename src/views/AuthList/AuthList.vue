@@ -65,6 +65,7 @@
 </template>
 
 <script lang="ts">
+// 角色列表
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';

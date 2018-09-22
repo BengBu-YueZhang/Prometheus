@@ -6,6 +6,7 @@ import UserList from '@/views/UserList/UserList.vue';
 import RoleList from '@/views/RoleList/RoleList.vue';
 import AuthList from '@/views/AuthList/AuthList.vue';
 import Config from '@/views/Config/Config.vue';
+import User from '@/views/User/User.vue'
 import Stroe from './store';
 
 Vue.use(Router);
@@ -29,12 +30,21 @@ const router = new Router({
       path: '/home',
       component: Home,
       name: 'Home',
-      redirect: '/home/auth/list',
+      redirect: '/home/user',
       meta: {
         requiresAuth: true,
         Breadcrumbs: '首页',
       },
       children: [
+        {
+          path: 'user',
+          component: User,
+          name: 'User',
+          meta: {
+            requiresAuth: true,
+            Breadcrumbs: '用户首页'
+          }
+        },
         {
           path: 'user/list',
           component: UserList,

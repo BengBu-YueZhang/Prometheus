@@ -4,6 +4,7 @@
     class="wrapper"
     v-loading="loading">
     <div class="login-wrapper">
+      <img class="logo" src="../assets/logo.png"/>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="name">
           <el-input
@@ -88,27 +89,32 @@ export default class Login extends Vue {
   }
 
   public async login(): Promise<any> {
-    this.loadingText = '登录中……';
-    this.loading = true;
-    let token: string;
-    let roles: RoleInterface[];
-    let auths: AuthsInterface[];
-    // TODO: 准备数据中, 自动登录不再次获取token
-    if (!isHaveStorage('token')) {
-      ({ data: { token } } = await LoginRequest.login(this.form));
-      setLocalStorage('token', token);
+    try {
+      this.loadingText = '登录中……';
+      this.loading = true;
+      let token: string;
+      let roles: RoleInterface[];
+      let auths: AuthsInterface[];
+      // TODO: 准备数据中, 自动登录不再次获取token
+      if (!isHaveStorage('token')) {
+        ({ data: { token } } = await LoginRequest.login(this.form));
+        setLocalStorage('token', token);
+      }
+      token = getLocalStorage('token');
+      this.loadingText = '登录成功, 准备数据中…';
+      // 将所有角色和权限加载到vuex中
+      const role = await RoleListRequest.getRoleList({ pagestart: 1, pagesize: 10000 });
+      const auth = await AuthListRequest.getAuthList({ pagestart: 1, pagesize: 10000 });
+      roles = role.data.list;
+      auths = auth.data.list;
+      this.setRoles(roles);
+      this.setToken(token);
+      this.setAuths(auths);
+      this.$router.push('/home');
+    } catch (error) {
+      this.$notify({ title: 'error', type: 'error', message: '登录失败' });
     }
-    token = getLocalStorage('token');
-    this.loadingText = '登录成功, 准备数据中…';
-    const role = await RoleListRequest.getRoleList({ pagestart: 1, pagesize: 10000 });
-    const auth = await AuthListRequest.getAuthList({ pagestart: 1, pagesize: 10000 })
-    roles = role.data.list
-    auths = auth.data.list
-    this.setRoles(roles);
-    this.setToken(token);
-    this.setAuths(auths);
     this.loading = false;
-    this.$router.push('/home');
   }
 }
 </script>
@@ -123,11 +129,16 @@ export default class Login extends Vue {
   overflow: hidden;
   background-size: 100% 100%;
   background-image: url('https://unsplash.it/1280/720?random');
+  .logo {
+    width: 60px;
+    margin-bottom: 10px;
+  }
   .login-wrapper {
     width: 300px;
     height: 100vh;
     padding: 30px 20px;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.6);
+    text-align: center;
   }
   .login-button {
     width: 100%;

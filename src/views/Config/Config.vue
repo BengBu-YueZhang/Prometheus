@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+// 角色权限配置页
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import AuthListRequest from '@/request/authList';
