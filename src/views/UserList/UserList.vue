@@ -126,7 +126,7 @@ export default class UserList extends mixins(TableMixins) {
   }
 
   public edit (row: UserInterface): void {
-    this.user = row;
+    this.user = { ...row };
     this.user.roles = this.user.roles.map(r => r.id);
     this.$refs.addUser.visible = true;
   }
