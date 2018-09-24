@@ -7,7 +7,7 @@
         text-color="#fff"
         active-text-color="#ffd04b">
         <el-menu-item
-          v-for="(menu, index) in allMenus"
+          v-for="(menu, index) in menus"
           :key="index"
           :index="menu.path"
           @click="$router.push(menu.path)">
@@ -37,20 +37,24 @@ import stroe from '../store';
 import LoginRequest from '../request/login';
 import AllMenu from '@/config/allMenu';
 import { State } from 'vuex-class';
-import { AuthsInterface } from '@/interfaces'
+import { MenuInterface, UserInterface } from '@/interfaces';
+import flat from '@/util/flat';
 
 @Component
 export default class Container extends Vue {
-  @State('auths') public auths!: AuthsInterface[];
+  @State('current') public current!: UserInterface;
 
-  public allMenus: any[] = AllMenu;
+  public allMenus: MenuInterface[] = AllMenu;
 
   get active(): string {
     return '123'
   }
 
-  get menu(): AuthsInterface[] {
-    return this.auths;
+  get menus(): MenuInterface[] {
+    let currentAuths = this.current.roles.map(c => c.auths)
+    currentAuths = flat(currentAuths)
+    currentAuths = currentAuths.map(a => a.code)
+    return this.allMenus.filter(a => currentAuths.indexOf(a.auth) > -1)
   }
 
   public async logout(): Promise<any> {

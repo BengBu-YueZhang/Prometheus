@@ -118,18 +118,18 @@ router.beforeEach((to: any, from: any, next: any): void => {
     } else {
       if (pn) {
         if (Stroe.state.current && Stroe.state.current.roles && Stroe.state.current.roles.length) {
-          auths = Stroe.state.current.roles.map(c => c.auths)
-          auths = flat(auths)
-          auths = auths.map(a => a.code)
+          auths = Stroe.state.current.roles.map(c => c.auths);
+          auths = flat(auths);
+          auths = auths.map(a => a.code);
           if (auths.indexOf(pn) === -1) {
-            next({ path: '/home/no-auth'})
+            next({ path: '/home/no-auth'});
           }
         } else {
-          next({ path: '/home/no-auth'})
+          next({ path: '/home/no-auth'});
         }
-        next()
+        next();
       } else {
-        next()
+        next();
       }
     }
   }

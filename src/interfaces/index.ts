@@ -50,3 +50,10 @@ export interface LoginInterface {
 export interface QueryInterface {
   path?: string
 }
+
+export interface MenuInterface {
+  path: string;
+  auth: string;
+  name: string;
+  icon: string;
+}
