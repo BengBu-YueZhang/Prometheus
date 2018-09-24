@@ -6,8 +6,10 @@ import UserList from '@/views/UserList/UserList.vue';
 import RoleList from '@/views/RoleList/RoleList.vue';
 import AuthList from '@/views/AuthList/AuthList.vue';
 import Config from '@/views/Config/Config.vue';
-import User from '@/views/User/User.vue'
+import User from '@/views/User/User.vue';
+import NoAuth from '@/views/NoAuth.vue';
 import Stroe from './store';
+import flat from '@/util/flat';
 
 Vue.use(Router);
 
@@ -37,11 +39,20 @@ const router = new Router({
       },
       children: [
         {
+          path: 'no-auth',
+          component: NoAuth,
+          name: 'NoAuth',
+          meta: {
+            requiresAuth: false,
+            Breadcrumbs: '无权限'
+          }
+        },
+        {
           path: 'user',
           component: User,
           name: 'User',
           meta: {
-            requiresAuth: true,
+            requiresAuth: false,
             Breadcrumbs: '用户首页',
           }
         },
@@ -91,15 +102,30 @@ const router = new Router({
 });
 
 router.beforeEach((to: any, from: any, next: any): void => {
-  const { path, meta: { requiresAuth } } = to;
+  const { path, meta: { requiresAuth, pn } } = to;
+  let auths = []
   // 首先进行登录的鉴权
-  console.log(to)
   if (!Stroe.state.token && path !== '/login') {
     router.push('/login');
   } else {
-    if (requiresAuth) {
-    } else {
+    if (!requiresAuth) {
       next();
+    } else {
+      if (pn) {
+        if (Stroe.state.current && Stroe.state.current.roles && Stroe.state.current.roles.length) {
+          auths = Stroe.state.current.roles.map(c => c.auths)
+          auths = flat(auths)
+          auths = auths.map(a => a.code)
+          if (auths.indexOf(pn) === -1) {
+            next({ path: '/home/no-auth'})
+          }
+        } else {
+          next({ path: '/home/no-auth'})
+        }
+        next()
+      } else {
+        next()
+      }
     }
   }
 });

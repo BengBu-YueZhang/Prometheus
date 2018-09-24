@@ -38,4 +38,12 @@ export default {
       throw error;
     }
   },
+
+  async getCurrentUser(): Promise<any> {
+    try {
+      return Axios.get(API.currentUser)
+    } catch (error) {
+      throw error;
+    }
+  }
 };

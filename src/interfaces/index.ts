@@ -38,7 +38,7 @@ export interface RoleInterface extends IdInterface {
  */
 export interface UserInterface extends IdInterface {
   name: string;
-  password: string;
+  password?: string;
   roles: any[];
 }
 

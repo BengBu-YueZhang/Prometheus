@@ -7,5 +7,6 @@ export default {
   authList: '/auth/list',
   addRole: '/role',
   addAuth: '/auth',
-  groupList: '/auth/group'
+  groupList: '/auth/group',
+  currentUser: '/user/current',
 };

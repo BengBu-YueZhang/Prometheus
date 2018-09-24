@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Commit } from 'vuex';
-import { RoleInterface, AuthsInterface } from './interfaces';
+import { RoleInterface, AuthsInterface, UserInterface } from './interfaces';
 import { clearLocalStorage } from './util/storage';
 
 Vue.use(Vuex);
@@ -11,12 +11,14 @@ interface StateInterface {
   roles: RoleInterface[];
   token: string;
   auths: AuthsInterface[];
+  current: UserInterface | null;
 }
 
 const state: StateInterface = {
   roles: [],
   token: '',
   auths: [],
+  current: null,
 };
 
 const getters = {
@@ -38,6 +40,10 @@ const actions = {
   logout({ commit }: { commit: Commit }): void {
     commit('LOG_OUT');
   },
+
+  setCurrentUser({ commit }: { commit: Commit }, user: UserInterface): void {
+    commit('SET_CURRENT_USER', user);
+  }
 };
 
 const mutations = {
@@ -59,6 +65,11 @@ const mutations = {
     vstate.auths = [];
     vstate.token = '';
   },
+
+  SET_CURRENT_USER(vstate: StateInterface, user: UserInterface): void {
+    vstate.current = user
+    console.log(vstate)
+  }
 };
 
 export default new Vuex.Store({

@@ -32,8 +32,9 @@ import { Component } from 'vue-property-decorator';
 import LoginRequest from '@/request/login';
 import RoleListRequest from '@/request/roleList';
 import AuthListRequest from '@/request/authList';
+import UserRequest from '@/request/userList';
 import { setLocalStorage, isHaveStorage, getLocalStorage } from '@/util/storage';
-import { RoleInterface, AuthsInterface, LoginInterface } from '@/interfaces';
+import { RoleInterface, AuthsInterface, LoginInterface, UserInterface } from '@/interfaces';
 import { Action, State } from 'vuex-class';
 
 interface RulesInterface {
@@ -46,6 +47,7 @@ export default class Login extends Vue {
   @Action('setToken') public setToken!: (token: string | null) => void;
   @Action('setRoles') public setRoles!: (roles: RoleInterface[]) => void;
   @Action('setAuths') public setAuths!: (auths: AuthsInterface[]) => void;
+  @Action('setCurrentUser') public setCurrentUser!: (user: UserInterface) => void;
 
   public form: LoginInterface = {
     name: '',
@@ -88,8 +90,6 @@ export default class Login extends Vue {
       this.loadingText = '登录中……';
       this.loading = true;
       let token: string;
-      let roles: RoleInterface[];
-      let auths: AuthsInterface[];
       // TODO: 准备数据中, 自动登录不再次获取token
       if (!isHaveStorage('token')) {
         ({ data: { token } } = await LoginRequest.login(this.form));
@@ -100,11 +100,11 @@ export default class Login extends Vue {
       // 将所有角色和权限加载到vuex中
       const role = await RoleListRequest.getRoleList({ pagestart: 1, pagesize: 10000 });
       const auth = await AuthListRequest.getAuthList({ pagestart: 1, pagesize: 10000 });
-      roles = role.data.list;
-      auths = auth.data.list;
-      this.setRoles(roles);
+      const current = await UserRequest.getCurrentUser();
+      this.setRoles(role.data.list);
       this.setToken(token);
-      this.setAuths(auths);
+      this.setAuths(auth.data.list);
+      this.setCurrentUser(current.data);
       this.$router.push('/home');
     } catch (error) {
       this.$notify({ title: 'error', type: 'error', message: '登录失败' });
