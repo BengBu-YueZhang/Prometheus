@@ -67,8 +67,7 @@ const mutations = {
   },
 
   SET_CURRENT_USER(vstate: StateInterface, user: UserInterface): void {
-    vstate.current = user
-    console.log(vstate)
+    vstate.current = user;
   }
 };
 

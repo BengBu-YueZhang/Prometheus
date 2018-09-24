@@ -56,7 +56,7 @@ export default class Container extends Vue {
   public async logout(): Promise<any> {
     await LoginRequest.logout();
     stroe.dispatch('logout');
-    this.$router.push('login');
+    this.$router.push('/login');
   }
 }
 </script>
