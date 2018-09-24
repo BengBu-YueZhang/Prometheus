@@ -34,8 +34,9 @@ import RoleListRequest from '@/request/roleList';
 import AuthListRequest from '@/request/authList';
 import UserRequest from '@/request/userList';
 import { setLocalStorage, isHaveStorage, getLocalStorage } from '@/util/storage';
-import { RoleInterface, AuthsInterface, LoginInterface, UserInterface } from '@/interfaces';
+import { RoleInterface, AuthsInterface, LoginInterface, UserInterface, QueryInterface } from '@/interfaces';
 import { Action, State } from 'vuex-class';
+import qs from 'qs';
 
 interface RulesInterface {
   name: any[];
@@ -67,10 +68,20 @@ export default class Login extends Vue {
 
   public loadingText: string = '';
 
+  public query: QueryInterface = {}
+
   public created(): void {
     // 自动登录, localstroge有token进行自动登录
     if (isHaveStorage('token')) {
       this.login();
+    }
+    this.initQuery()
+  }
+
+  public initQuery(): void {
+    const href: string = window.location.href
+    if (href.indexOf('?') > -1) {
+      this.query = qs.parse(href.split('?')[1])
     }
   }
 
@@ -105,7 +116,11 @@ export default class Login extends Vue {
       this.setToken(token);
       this.setAuths(auth.data.list);
       this.setCurrentUser(current.data);
-      this.$router.push('/home');
+      if (Object.keys(this.query).length > 0) {
+        this.$router.push(this.query.path);
+      } else {
+        this.$router.push('/home');
+      }
     } catch (error) {
       this.$notify({ title: 'error', type: 'error', message: '登录失败' });
     }

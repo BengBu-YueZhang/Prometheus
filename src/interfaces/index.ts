@@ -46,3 +46,7 @@ export interface LoginInterface {
   name: string;
   password: string;
 }
+
+export interface QueryInterface {
+  path?: string
+}

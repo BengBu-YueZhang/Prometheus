@@ -106,7 +106,12 @@ router.beforeEach((to: any, from: any, next: any): void => {
   let auths = []
   // 首先进行登录的鉴权
   if (!Stroe.state.token && path !== '/login') {
-    router.push('/login');
+    const { fullPath } = to
+    console.log(to)
+    next({
+      path: '/login',
+      query: { path: fullPath }
+    })
   } else {
     if (!requiresAuth) {
       next();
